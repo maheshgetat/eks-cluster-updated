@@ -1,0 +1,21 @@
+#/bin/bash
+
+vpc_id=$1
+private_subnet_id1=$2
+private_subnet_id2=$3
+terraform init
+echo "Starting to import existing resources........."
+echo "Running terraform import module.vpc_for_eks.aws_vpc.custom_vpc ${vpc_id}........"
+terraform import module.vpc_for_eks.aws_vpc.custom_vpc ${vpc_id}
+
+echo "Running terraform import module.vpc_for_eks.aws_subnet.private_subnet[0] ${private_subnet_id1}.............."
+terraform import module.vpc_for_eks.aws_subnet.private_subnet[0] ${private_subnet_id1}
+
+
+echo "Running terraform import module.vpc_for_eks.aws_subnet.private_subnet[1] ${private_subnet_id2}............"
+terraform import module.vpc_for_eks.aws_subnet.private_subnet[1] ${private_subnet_id2}
+
+echo " Starting to create EKS cluster........."
+
+terraform plan 
+terraform apply
